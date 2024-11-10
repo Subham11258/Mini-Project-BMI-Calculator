@@ -1,35 +1,50 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import {useState} from 'react';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+
+  const [weight, setWeight] = useState("");
+  const [height, setHeight] = useState("");
+  const [result,setResult] = useState("");
+  const [calculated, setCalculated] = useState(false);
+
+  let handleResult = ()=>{
+    if(weight==="" || height===""){
+      alert("Enter a valid input")
+      setCalculated(false);
+      return;
+      
+    }
+    const ans = weight / (height * height);
+    setResult(ans.toFixed(2));
+    setWeight("");
+    setHeight("");
+    if(calculated!==true){
+      setCalculated(!calculated);
+    }
+    
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="container">
+    <div className="container-body ">
+      <h1>
+        BMI Calculator
+      </h1>
+      <div className="body">
+      <div className="input-field">
+        <span><b>Weight:</b></span>
+        <input type="number" value={weight} onChange={(e)=>setWeight(e.target.value)} placeholder="Enter your body weight in kg"/><br/>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div className="input-field">
+        <span><b>Height:</b></span>
+        <input type="number" value={height} onChange={(e)=>setHeight(e.target.value)} placeholder="Enter your height in kg"/><br/>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      <button onClick={handleResult}>Calculate</button>
+      {calculated?<h3>Your BMI is {result}</h3>:null}
+      
+      </div>
+    </div>
+    </div>
   )
 }
-
-export default App
